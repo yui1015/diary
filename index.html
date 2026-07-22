@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#6b8f71" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="日記" />
+  <meta name="description" content="端末内だけで動く、シンプルな日記アプリ" />
+  <title>日記</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1 class="brand">日記</h1>
+      <p class="brand-sub" id="topbar-sub">今日のひとこと</p>
+    </header>
+
+    <main class="main">
+      <!-- 書く -->
+      <section id="view-write" class="view is-active" aria-label="日記を書く">
+        <form id="entry-form" class="entry-form">
+          <input type="hidden" id="entry-id" />
+
+          <label class="field">
+            <span class="field-label">日付</span>
+            <input type="date" id="entry-date" required />
+          </label>
+
+          <div class="field">
+            <span class="field-label">カテゴリ</span>
+            <div class="tag-picker" id="tag-picker" role="group" aria-label="カテゴリタグ"></div>
+            <div class="tag-custom">
+              <input type="text" id="custom-tag" maxlength="12" placeholder="タグを追加" autocomplete="off" />
+              <button type="button" id="add-tag-btn" class="btn-ghost">追加</button>
+            </div>
+          </div>
+
+          <label class="field field-grow">
+            <span class="field-label">本文</span>
+            <textarea id="entry-body" rows="10" placeholder="今日あったこと、感じたこと…" required></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button type="button" id="reset-btn" class="btn-ghost">クリア</button>
+            <button type="submit" class="btn-primary" id="save-btn">保存する</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- カレンダー -->
+      <section id="view-calendar" class="view" aria-label="カレンダー">
+        <div class="cal-header">
+          <button type="button" id="cal-prev" class="icon-btn" aria-label="前の月">‹</button>
+          <h2 id="cal-title" class="cal-title"></h2>
+          <button type="button" id="cal-next" class="icon-btn" aria-label="次の月">›</button>
+        </div>
+        <div class="cal-weekdays" aria-hidden="true">
+          <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+        </div>
+        <div id="cal-grid" class="cal-grid" role="grid"></div>
+        <div id="cal-day-panel" class="day-panel is-empty">
+          <p class="day-panel-empty">日付を選ぶと日記が表示されます</p>
+          <div id="cal-day-entries" class="entry-cards" hidden></div>
+        </div>
+      </section>
+
+      <!-- 一覧 -->
+      <section id="view-list" class="view" aria-label="一覧・検索">
+        <div class="list-filters">
+          <div class="search-bar">
+            <input
+              type="search"
+              id="search-input"
+              placeholder="本文やタグで検索…"
+              enterkeyhint="search"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="filter-row">
+            <label class="filter-date">
+              <span class="field-label">開始</span>
+              <input type="date" id="filter-from" />
+            </label>
+            <span class="filter-tilde" aria-hidden="true">〜</span>
+            <label class="filter-date">
+              <span class="field-label">終了</span>
+              <input type="date" id="filter-to" />
+            </label>
+          </div>
+
+          <div class="field">
+            <div class="filter-label-row">
+              <span class="field-label">タグで絞り込み</span>
+              <button type="button" id="clear-filters-btn" class="btn-text">条件クリア</button>
+            </div>
+            <div class="tag-picker" id="filter-tag-picker" role="group" aria-label="タグフィルタ"></div>
+          </div>
+        </div>
+
+        <div class="list-toolbar">
+          <label class="select-all">
+            <input type="checkbox" id="select-all" />
+            <span>すべて選択</span>
+          </label>
+          <span id="list-count" class="list-count"></span>
+        </div>
+
+        <div class="list-actions">
+          <button type="button" id="download-selected-btn" class="btn-ghost btn-sm" disabled>選択をDL</button>
+          <button type="button" id="download-all-btn" class="btn-ghost btn-sm">すべてDL</button>
+        </div>
+
+        <div id="entry-list" class="entry-cards"></div>
+        <p id="list-empty" class="empty-state" hidden>まだ日記がありません</p>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="メインメニュー">
+      <button type="button" class="nav-item is-active" data-view="write">
+        <span class="nav-icon" aria-hidden="true">✎</span>
+        <span>書く</span>
+      </button>
+      <button type="button" class="nav-item" data-view="calendar">
+        <span class="nav-icon" aria-hidden="true">▦</span>
+        <span>カレンダー</span>
+      </button>
+      <button type="button" class="nav-item" data-view="list">
+        <span class="nav-icon" aria-hidden="true">☰</span>
+        <span>一覧</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- 詳細モーダル -->
+  <dialog id="detail-dialog" class="detail-dialog">
+    <article class="detail-sheet">
+      <header class="detail-header">
+        <div>
+          <p id="detail-date" class="detail-date"></p>
+          <div id="detail-tags" class="tag-row"></div>
+        </div>
+        <button type="button" id="detail-close" class="icon-btn" aria-label="閉じる">×</button>
+      </header>
+      <div id="detail-body" class="detail-body"></div>
+      <footer class="detail-actions">
+        <button type="button" id="detail-download" class="btn-ghost">ダウンロード</button>
+        <button type="button" id="detail-edit" class="btn-ghost">編集</button>
+        <button type="button" id="detail-delete" class="btn-danger">削除</button>
+      </footer>
+    </article>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
