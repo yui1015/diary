@@ -1,24 +1,25 @@
 :root {
-  --bg: #e8efe4;
-  --bg-deep: #d5e0cf;
-  --surface: #f5f8f2;
-  --surface-soft: rgba(245, 248, 242, 0.92);
-  --ink: #2a3226;
-  --ink-soft: #5c6756;
-  --muted: #8a9483;
-  --accent: #5f8a66;
-  --accent-deep: #3f6546;
-  --accent-soft: #d7e6d4;
-  --line: rgba(63, 101, 70, 0.14);
+  --bg: #efeaf7;
+  --bg-deep: #e0d8ef;
+  --surface: #faf8fc;
+  --surface-soft: rgba(250, 248, 252, 0.94);
+  --ink: #2e2a36;
+  --ink-soft: #5e5768;
+  --muted: #8f8799;
+  --accent: #8b7bb8;
+  --accent-deep: #5c4d7a;
+  --accent-soft: #e6e0f2;
+  --line: rgba(92, 77, 122, 0.14);
   --danger: #a85a4a;
   --danger-soft: #f3e0db;
-  --shadow: 0 10px 30px rgba(42, 50, 38, 0.08);
+  --shadow: 0 10px 30px rgba(46, 42, 54, 0.08);
+  --focus-ring: rgba(139, 123, 184, 0.22);
   --radius: 18px;
   --nav-h: 68px;
   --top-h: 72px;
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
-  --font: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+  --font: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
 }
 
 *,
@@ -34,8 +35,8 @@ body {
   font-family: var(--font);
   color: var(--ink);
   background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(95, 138, 102, 0.18), transparent 55%),
-    radial-gradient(900px 500px at 100% 0%, rgba(160, 140, 90, 0.12), transparent 50%),
+    radial-gradient(1200px 600px at 10% -10%, rgba(139, 123, 184, 0.2), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(180, 150, 200, 0.14), transparent 50%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
   background-attachment: fixed;
   -webkit-tap-highlight-color: transparent;
@@ -73,7 +74,7 @@ button {
   top: 0;
   z-index: 10;
   padding: calc(14px + var(--safe-t)) 20px 12px;
-  background: linear-gradient(180deg, rgba(232, 239, 228, 0.96), rgba(232, 239, 228, 0.82));
+  background: linear-gradient(180deg, rgba(239, 234, 247, 0.96), rgba(239, 234, 247, 0.82));
   backdrop-filter: blur(10px);
 }
 
@@ -165,7 +166,7 @@ button {
 .field textarea:focus,
 .search-bar input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(95, 138, 102, 0.18);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .tag-picker {
@@ -189,7 +190,7 @@ button {
 
 .tag-chip.is-selected {
   background: var(--accent-soft);
-  border-color: rgba(95, 138, 102, 0.35);
+  border-color: rgba(139, 123, 184, 0.35);
   color: var(--accent-deep);
   font-weight: 500;
 }
@@ -423,7 +424,7 @@ button {
 
 .filter-date input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(95, 138, 102, 0.18);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .filter-tilde {
@@ -512,7 +513,7 @@ button {
 }
 
 .entry-card.is-checked {
-  border-color: rgba(95, 138, 102, 0.45);
+  border-color: rgba(139, 123, 184, 0.45);
   background: #fff;
 }
 

@@ -4,8 +4,8 @@
   "description": "端末内だけで動くシンプルな日記アプリ",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#e8efe4",
-  "theme_color": "#5f8a66",
+  "background_color": "#efeaf7",
+  "theme_color": "#8b7bb8",
   "lang": "ja",
   "icons": [
     {

@@ -1,4 +1,4 @@
-const CACHE = "natural-diary-v2";
+const CACHE = "natural-diary-v3";
 const ASSETS = [
   "./",
   "./index.html",
